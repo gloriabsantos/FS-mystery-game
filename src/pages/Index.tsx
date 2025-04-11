@@ -1,12 +1,32 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import React from 'react';
+import { useGame } from '../context/GameContext';
+import IntroPage from '../components/IntroPage';
+import PuzzleScreen from '../components/PuzzleScreen';
+import EndScreen from '../components/EndScreen';
 
 const Index = () => {
+  const { gameState } = useGame();
+  
+  // Render different screens based on the game status
+  const renderScreen = () => {
+    switch (gameState.status) {
+      case 'intro':
+        return <IntroPage />;
+      case 'playing':
+        return <PuzzleScreen />;
+      case 'won':
+      case 'lost':
+      case 'no-puzzles':
+        return <EndScreen />;
+      default:
+        return <IntroPage />;
+    }
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-filmOffWhite font-outfit">
+      {renderScreen()}
     </div>
   );
 };
